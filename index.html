@@ -2,17 +2,28 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>اختبار</title>
+  <title>فحص الشاشة</title>
 </head>
 <body>
 
-<h1>اختبار JavaScript</h1>
+<h1>فحص مشاركة الشاشة</h1>
 
-<button onclick="document.getElementById('result').textContent='JavaScript يعمل'">
-  اضغط هنا
-</button>
+<button onclick="checkScreen()">فحص</button>
 
-<p id="result">لم يتم الضغط بعد.</p>
+<p id="result">لم يتم الفحص بعد.</p>
+
+<script>
+function checkScreen() {
+  if (navigator.mediaDevices &&
+      navigator.mediaDevices.getDisplayMedia) {
+    document.getElementById("result").textContent =
+      "Chrome يتعرف على وظيفة مشاركة الشاشة.";
+  } else {
+    document.getElementById("result").textContent =
+      "وظيفة مشاركة الشاشة غير متاحة هنا.";
+  }
+}
+</script>
 
 </body>
 </html>
