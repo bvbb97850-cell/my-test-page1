@@ -1,28 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>فحص الشاشة</title>
+  <title>اختبار أذونات Chrome</title>
 </head>
+
 <body>
+  <h2>اختبار أذونات الجهاز</h2>
 
-<h1>فحص مشاركة الشاشة</h1>
+  <button onclick="testCamera()">📷 اختبار الكاميرا</button>
+  <button onclick="testMicrophone()">🎤 اختبار الميكروفون</button>
+  <button onclick="testScreen()">🖥️ اختبار مشاركة الشاشة</button>
 
-<button onclick="checkScreen()">فحص</button>
+  <p id="status">اختر اختبارًا.</p>
 
-<p id="result">لم يتم الفحص بعد.</p>
+  <video id="preview" autoplay playsinline
+         style="width:100%;max-width:500px;"></video>
 
 <script>
-function checkScreen() {
-  if (navigator.mediaDevices &&
-      navigator.mediaDevices.getDisplayMedia) {
-    document.getElementById("result").textContent =
-      "Chrome يتعرف على وظيفة مشاركة الشاشة.";
-  } else {
-    document.getElementById("result").textContent =
-      "وظيفة مشاركة الشاشة غير متاحة هنا.";
+
+const status = document.getElementById("status");
+const video = document.getElementById("preview");
+
+async function testCamera() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: true
+    });
+
+    video.srcObject = stream;
+    status.textContent = "تم السماح للكاميرا.";
+
+  } catch (error) {
+    status.textContent =
+      "الكاميرا: " + error.name + " — " + error.message;
   }
 }
+
+async function testMicrophone() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: true
+    });
+
+    status.textContent = "تم السماح بالميكروفون.";
+
+    stream.getTracks().forEach(track => track.stop());
+
+  } catch (error) {
+    status.textContent =
+      "الميكروفون: " + error.name + " — " + error.message;
+  }
+}
+
+async function testScreen() {
+  try {
+    const stream = await navigator.mediaDevices.getDisplayMedia({
+      video: true,
+      audio: false
+    });
+
+    video.srcObject = stream;
+    status.textContent = "تم السماح بمشاركة الشاشة.";
+
+  } catch (error) {
+    status.textContent =
+      "الشاشة: " + error.name + " — " + error.message;
+  }
+}
+
 </script>
 
 </body>
