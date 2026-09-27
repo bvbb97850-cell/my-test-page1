@@ -2,39 +2,17 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>تجربة مشاركة الشاشة</title>
+  <title>اختبار</title>
 </head>
 <body>
-  <h1>تجربة مشاركة الشاشة</h1>
 
-  <button id="start">مشاركة الشاشة</button>
-  <p id="status">لم تبدأ المشاركة بعد.</p>
+<h1>اختبار JavaScript</h1>
 
-  <video id="screen" autoplay playsinline
-         style="width:100%; max-width:700px;"></video>
+<button onclick="document.getElementById('result').textContent='JavaScript يعمل'">
+  اضغط هنا
+</button>
 
-  <script>
-    const button = document.getElementById("start");
-    const video = document.getElementById("screen");
-    const status = document.getElementById("status");
+<p id="result">لم يتم الضغط بعد.</p>
 
-    button.addEventListener("click", async () => {
-      try {
-        const stream = await navigator.mediaDevices.getDisplayMedia({
-          video: true,
-          audio: false
-        });
-
-        video.srcObject = stream;
-        status.textContent = "تمت مشاركة الشاشة بموافقتك.";
-
-        stream.getVideoTracks()[0].addEventListener("ended", () => {
-          video.srcObject = null;
-          status.textContent = "لم تتم مشاركة الشاشة: " + error.name + " — " + error.message;
-      } catch (error) {
-        status.textContent = "لم تتم مشاركة الشاشة.";
-      }
-    });
-  </script>
 </body>
 </html>
