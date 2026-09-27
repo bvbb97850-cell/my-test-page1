@@ -30,8 +30,7 @@
 
         stream.getVideoTracks()[0].addEventListener("ended", () => {
           video.srcObject = null;
-          status.textContent = "تم إيقاف مشاركة الشاشة.";
-        });
+          status.textContent = "لم تتم مشاركة الشاشة: " + error.name + " — " + error.message;
       } catch (error) {
         status.textContent = "لم تتم مشاركة الشاشة.";
       }
